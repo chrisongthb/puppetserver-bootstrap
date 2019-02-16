@@ -1,12 +1,10 @@
 #!/bin/bash
+# https://github.com/chrisongthb/puppetserver-bootstrap
 # puppetserver-bootstrap
 # configure a single node puppetserver
 
 set -e
 set -u
-
-# TODO confluence: set ram, set repos, set proxies
-# TODO confluence: where to add ssh-key
 
 _say () {
   echo

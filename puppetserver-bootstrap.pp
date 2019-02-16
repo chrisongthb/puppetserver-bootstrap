@@ -1,3 +1,4 @@
+# https://github.com/chrisongthb/puppetserver-bootstrap
 # puppetserver-bootstrap
 # configure a single node puppetserver
 
