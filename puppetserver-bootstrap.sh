@@ -21,9 +21,9 @@ source $(dirname $0)/puppetserver-bootstrap.properties
 _say 'preparing apt repos...'
 curl -s ${_apt_key_puppetlabs} | apt-key add -
 curl -s ${_apt_key_postgresql} | apt-key add -
-add-apt-repository -n universe # provides openjdk-8-jre-headless
 apt-add-repository -n "${_apt_source_puppetlabs}"
 apt-add-repository -n "${_apt_source_postgresql}"
+apt-add-repository -n "${_apt_source_universe}"   # provides openjdk-8-jre-headless
 apt-get update
 
 ##########
