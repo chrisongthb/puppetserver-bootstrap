@@ -28,6 +28,18 @@ class { 'puppetserver':
 }
 
 ##############################
+# configure hiera
+class { 'hiera':
+  require   => Class['puppetserver'],
+  eyaml     => true,
+  hierarchy => [
+    'nodes/%{::clientcert}',
+    'locations/%{::domain}',
+    'common',
+  ],
+}
+
+##############################
 # configure puppetdb
 file { '/etc/cron.allow':
   ensure => file,

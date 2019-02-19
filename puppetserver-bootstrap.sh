@@ -55,6 +55,7 @@ mkdir -v /var/tmp/puppetserver-bootstrap/
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-puppetdb
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-lvm
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-r10k
+/opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-hiera
 
 ##########
 _say 'starting puppet apply...'
