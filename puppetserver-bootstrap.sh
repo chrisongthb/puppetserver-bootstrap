@@ -56,10 +56,12 @@ mkdir -v /var/tmp/puppetserver-bootstrap/
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-lvm
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-r10k
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-hiera
+/opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-puppet_authorization
 
 ##########
 _say 'starting puppet apply...'
 set +e
+/opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-puppet_authorization
 /opt/puppetlabs/bin/puppet apply --detailed-exitcodes --modulepath=/var/tmp/puppetserver-bootstrap/ $(dirname $0)/puppetserver-bootstrap.pp
 _rc=$?
 if [ $_rc -ge 4 -o $_rc -eq 1 ]; then
