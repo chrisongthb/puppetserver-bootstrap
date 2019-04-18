@@ -23,5 +23,5 @@ Start the installation by typing `bash puppetserver-bootstrap.sh`
 ## Limitations
 * r10k user is hardcoded 'root' (ssh key, ssh known hosts, webhook)
 * iptables are not going to be configured
-* `/opt/puppetlabs/puppet/bin/gem` works only on Ubuntu with ipv6 disabled or removed ipv6 address, see [Getting Started](#Getting-Started).
+* `/opt/puppetlabs/puppet/bin/gem` works only on Ubuntu with ipv6 disabled or removed ipv6 address, see [Configuration](#configuration).
 * Tested and verified on Ubuntu 18.04; should be working on other Ubuntu versions, too.
