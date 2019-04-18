@@ -86,6 +86,11 @@ exec { 'generate_ssh_keypair':
   provider => 'shell',
 }
 
+$r10k_basedir = $configure_lvm ? {
+  false   => "${::settings::confdir}/environments",
+  true    => "${::settings::confdir}/code/environments",
+  default => "${::settings::confdir}/environments",
+}
 # https://github.com/puppetlabs/r10k/blob/master/doc/dynamic-environments/configuration.mkd#postrun
 class { 'r10k':
   manage_modulepath => false,
@@ -93,7 +98,7 @@ class { 'r10k':
   sources           => {
     'puppet' => {
       'remote'  => $r10k_git_control_repo_url,
-      'basedir' => "${::settings::confdir}/environments",
+      'basedir' => $r10k_basedir,
       'prefix'  => false,
     },
   },
