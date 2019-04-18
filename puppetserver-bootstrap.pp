@@ -86,8 +86,10 @@ exec { 'generate_ssh_keypair':
   provider => 'shell',
 }
 
+# https://github.com/puppetlabs/r10k/blob/master/doc/dynamic-environments/configuration.mkd#postrun
 class { 'r10k':
   manage_modulepath => false,
+  postrun           => ['/usr/local/sbin/puppet_flush_environment_cache', '$modifiedenvs' ],
   sources           => {
     'puppet' => {
       'remote'  => $r10k_git_control_repo_url,
@@ -95,6 +97,53 @@ class { 'r10k':
       'prefix'  => false,
     },
   },
+}
+
+puppet_authorization::rule { 'enable clearing environment cache':
+  path                  => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
+  match_request_path    => '/puppet-admin-api/v1/environment-cache',
+  match_request_type    => 'path',
+  match_request_method  => 'delete',
+  allow                 => $::fqdn,
+  allow_unauthenticated => false,
+  sort_order            => 200,
+  notify                => Service['puppetserver'],
+}
+
+ini_setting { 'enable environment caching':
+  ensure => 'present',
+  path    => '/etc/puppetlabs/puppet/puppet.conf',
+  section => 'master',
+  setting => 'environment_timeout',
+  value   => 'unlimited',
+  notify  => Service['puppetserver'],
+}
+
+file { '/usr/local/sbin/puppet_flush_environment_cache':
+  ensure  => file,
+  mode    => '0755',
+  owner   => 'root',
+  group   => 'root',
+  content => '#!/usr/bin/env bash
+# https://www.example42.com/2017/03/27/environment_caching/
+# https://github.com/example42/psick/blob/production/bin/puppet_flush_environment_cache.sh
+
+# https://puppet.com/docs/puppetserver/latest/admin-api/v1/environment-cache.html
+# https://puppet.com/docs/puppetserver/6.1/config_file_auth.html
+
+hostcert="$(puppet config print hostcert)"
+key="$(puppet config print hostprivkey)"
+cacert="$(puppet config print cacert)"
+ppserver="$(puppet config print server)"
+
+if [ $# -eq 0 ]; then
+  curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache${query_params}
+else
+  for i in $@; do
+    curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache?environment=$i
+  done
+fi
+',
 }
 
 class {'r10k::webhook':
