@@ -6,7 +6,7 @@ Installs and configures:
 * puppetserver
 * postgresql
 * puppetdb
-* r10k
+* r10k and environment caching
 
 ## Getting Started
 If you are sure you don't want to adjust anything to your installation, start the installation by  
