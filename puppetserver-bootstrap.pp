@@ -142,7 +142,7 @@ cacert="$(puppet config print cacert)"
 ppserver="$(puppet config print server)"
 
 if [ $# -eq 0 ]; then
-  curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache${query_params}
+  curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache
 else
   for i in $@; do
     curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache?environment=$i
