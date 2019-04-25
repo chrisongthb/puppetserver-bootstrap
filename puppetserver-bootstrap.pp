@@ -209,7 +209,7 @@ if $configure_lvm {
     force   => true, # replace existing directory with link
   }
 
-  file { '/etc/puppetlabs/puppetdb':
+  file { '/etc/puppetlabs/puppetdb/postgresql/':
     require => Package['puppetserver'],
     ensure  => 'link',
     group   => 'root',
