@@ -36,13 +36,6 @@ _say 'installing puppet-agent and puppetserver...'
 apt-get install -y puppet-agent puppetserver
 
 ##########
-_say 'disabling puppet agent...'
-systemctl stop puppet.service
-systemctl disable puppet.service
-systemctl mask puppet.service
-/opt/puppetlabs/bin/puppet agent --disable 'puppet should not configure puppetserver'
-
-##########
 _say 'configuring puppetserver and installing puppetdb...'
 /opt/puppetlabs/bin/puppet config set --section main server $(hostname -f)
 /opt/puppetlabs/bin/puppetserver ca setup
