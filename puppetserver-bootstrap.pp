@@ -200,6 +200,15 @@ if $configure_lvm {
     mode   => '0755',
   }
 
+  file { '/etc/puppetlabs/puppet/code':
+    require => Package['puppetserver'],
+    ensure  => 'link',
+    group   => 'root',
+    owner   => 'root',
+    target  => '/var/puppetcode',
+    force   => true, # replace existing directory with link
+  }
+  
   file { '/etc/puppetlabs/code':
     require => Package['puppetserver'],
     ensure  => 'link',
