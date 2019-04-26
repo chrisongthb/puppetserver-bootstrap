@@ -119,6 +119,15 @@ ini_setting { 'enable environment caching':
   notify  => Service['puppetserver'],
 }
 
+ini_setting { 'store reports in puppetdb':
+  ensure => 'present',
+  path    => '/etc/puppetlabs/puppet/puppet.conf',
+  section => 'master',
+  setting => 'reports',
+  value   => 'puppetdb',
+  notify  => Service['puppetserver'],
+}
+
 file { '/usr/local/sbin/puppet_flush_environment_cache':
   ensure  => file,
   mode    => '0755',
