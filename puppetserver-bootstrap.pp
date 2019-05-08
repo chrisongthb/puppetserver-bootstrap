@@ -6,8 +6,8 @@
 # adjust the installation and configuration
 $configure_lvm             = false    # see below for details
 $r10k_git_control_repo_url = 'git@myGitlabInstance.myDomain:myGitGroup/control-repo.git'
-$git_ssh_hostkey_aliases   = [ 'myGitlabInstance', 'myGitlabInstance.myDomain', '1.2.3.4' ]
-$git_ssh_hostkey_string    = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+$git_ssh_hostkey_aliases   = [ 'myGitlabInstance', 'myGitlabInstance.myDomain', '1.2.3.4', 'fe80::1:2:3:4' ]
+$git_ssh_hostkey_string    = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' # see e.g. /etc/ssh/ssh_host_ecdsa_key.pub on myGitlabInstance
 $git_ssh_hostkey_type      = 'ecdsa-sha2-nistp256'
 $puppetdb_postgres_version = '11'
 $puppetserver_jvm_heap     = '2g'
