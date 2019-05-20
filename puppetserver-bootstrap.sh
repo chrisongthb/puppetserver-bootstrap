@@ -45,7 +45,7 @@ apt-get install -y puppetdb
 _say 'preparing puppet apply (downloading puppet modules)...'
 mkdir -v /var/tmp/puppetserver-bootstrap/
 # to avoid certificate issues behind proxy
-if ! [ -z $https_proxy ]; then
+if export | grep -q 'https_proxy='; then
   rsync -a /etc/ssl/certs/ /opt/puppetlabs/puppet/ssl/certs/
 fi
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-puppetserver
