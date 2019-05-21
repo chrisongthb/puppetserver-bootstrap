@@ -72,12 +72,20 @@ class { 'puppetdb::master::config':
 
 ##############################
 # configure r10k webhook
+file { '/root/.ssh':
+  ensure => 'directory',
+  mode   => '0700',
+  group  => 'root',
+  owner  => 'root',
+}
+
 sshkey { 'git_host_key':
   ensure       => present,
   host_aliases => $git_ssh_hostkey_aliases,
   key          => $git_ssh_hostkey_string,
   type         => $git_ssh_hostkey_type,
   target       => '/root/.ssh/known_hosts',
+  require      => File['/root/.ssh'],
 }
 
 exec { 'generate_ssh_keypair':
