@@ -48,10 +48,10 @@ mkdir -v /var/tmp/puppetserver-bootstrap/
 if export | grep -q 'https_proxy='; then
   rsync -a /etc/ssl/certs/ /opt/puppetlabs/puppet/ssl/certs/
 fi
+/opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-r10k --version '>= 6.8.0'
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-puppetserver
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-puppetdb
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-lvm
-/opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-r10k
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppet-hiera
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-puppet_authorization
 /opt/puppetlabs/bin/puppet module install --target-dir /var/tmp/puppetserver-bootstrap/ puppetlabs-inifile
