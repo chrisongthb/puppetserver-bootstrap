@@ -171,6 +171,7 @@ class {'r10k::webhook':
 class {'r10k::webhook::config':
   generate_types   => true,
   use_mcollective  => false,
+  bind_address     => '::',
   public_key_path  => "/etc/puppetlabs/puppet/ssl/ca/signed/${::fqdn}.pem",
   private_key_path => "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem",
 }
