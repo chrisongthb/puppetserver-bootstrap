@@ -142,6 +142,9 @@ file { '/usr/local/sbin/puppet_flush_environment_cache':
   owner   => 'root',
   group   => 'root',
   content => '#!/usr/bin/env bash
+
+# This file is managed by Puppet. Do not edit.
+
 # https://www.example42.com/2017/03/27/environment_caching/
 # https://github.com/example42/psick/blob/production/bin/puppet_flush_environment_cache.sh
 
@@ -154,10 +157,12 @@ cacert="$(puppet config print cacert)"
 ppserver="$(puppet config print server)"
 
 if [ $# -eq 0 ]; then
+  puppet generate types
   curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache
 else
-  for i in $@; do
-    curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache?environment=$i
+  for environment in $*; do
+    puppet generate types --environment ${environment}
+    curl --cert ${hostcert} --key ${key} --cacert ${cacert} -X DELETE https://${ppserver}:8140/puppet-admin-api/v1/environment-cache?environment=${environment}
   done
 fi
 ',
